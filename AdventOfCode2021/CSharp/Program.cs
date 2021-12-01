@@ -1,5 +1,10 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using System;
+using System.IO;
+using AdventOfCode2021;
 
-using System;
+var day1Input = File.ReadAllText("Day1Input.txt");
+var day1Part1 = new Day1().Part1(day1Input);
+Console.WriteLine($"Day 1 Part 1 answer: {day1Part1}");
 
-Console.WriteLine("Hello, World!");
+var day1Part2 = new Day1().Part2(day1Input);
+Console.WriteLine($"Day 1 Part 2 answer: {day1Part2}");
