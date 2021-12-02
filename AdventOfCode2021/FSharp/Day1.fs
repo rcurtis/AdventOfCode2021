@@ -29,7 +29,22 @@ let part1 (text: string) : int =
     input
     |> Array.fold folder State.empty
     |> fun it -> it.total
+    
+let part1Alt (text:string) : int =
+    text.Split("\r\n")
+    |> Array.map (fun it -> it |> int)
+    |> Array.pairwise
+    |> Array.filter (fun (a, b) -> a < b)
+    |> Array.length
 
+let part2Alt (text:string) : int =
+    text.Split("\r\n")
+    |> Array.map (fun it -> it |> int)
+    |> Array.windowed 3
+    |> Array.map (fun it -> it |> Array.sum)
+    |> Array.pairwise
+    |> Array.filter (fun (a,b) -> a < b)
+    |> Array.length
 
 let part2 (text: string) : int =
     let input = parseInput text
@@ -75,4 +90,16 @@ module Test =
     let ``Part 2 Test`` () =
         let expected = 5
         let actual = part2 smallInput
+        Assert.Equal(expected, actual)
+
+    [<Fact>]
+    let ``Part 1 Alt Test`` () =
+        let expected = 7
+        let actual = part1Alt smallInput
+        Assert.Equal(expected, actual)
+
+    [<Fact>]
+    let ``Part 2 Alt Test`` () =
+        let expected = 5
+        let actual = part2Alt smallInput
         Assert.Equal(expected, actual)
