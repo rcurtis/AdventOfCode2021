@@ -20,3 +20,6 @@ Console.WriteLine($"Day 2 Part 1 answer: {day2Part2Answer}: multiplied: {day2Par
 var day3Input = File.ReadAllText("Day3Input.txt");
 var day3Part1Answer = new Day3().Part1(day3Input);
 Console.WriteLine($"Day 3 Part 3 answer: {day3Part1Answer}: multiplied: {day3Part1Answer.gamma * day3Part1Answer.epsilon}");
+
+var day3Part2Answer = new Day3().Part2(day3Input);
+Console.WriteLine($"Day 3 Part 3 answer: {day3Part2Answer}: multiplied: {day3Part2Answer.oxygen * day3Part2Answer.co2}");

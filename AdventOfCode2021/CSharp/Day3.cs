@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -25,15 +26,54 @@ namespace AdventOfCode2021
                 counts += count > 0 ? "1" : "0";
             }
 
-            var gamma = Convert.ToInt32(counts, 2);
             var inverseCount = new string(counts.Select(it => it == '1' ? '0' : '1').ToArray());
+            var gamma = Convert.ToInt32(counts, 2);
             var epsilon = Convert.ToInt32(inverseCount, 2);
             return (gamma, epsilon);
         }
         
         public (int oxygen, int co2) Part2(string input)
         {
-            return (0,0);
+            var lines = input.Split("\r\n");
+            var columnCount = lines.First().Length;
+
+            string NarrowAndPrefer(string[] inpt, int prefer)
+            {
+                while (true)
+                {
+                    for (var i = 0; i < columnCount; i++)
+                    {
+                        var count = 0;
+                        foreach (var line in inpt)
+                        {
+                            if (line[i] == '0')
+                                count--;
+                            else 
+                                count++;
+                        }
+
+                        var preference = prefer switch
+                        {
+                            0 => count >= 0 ? '0' : '1',
+                            1 => count >= 0 ? '1' : '0',
+                            _ => throw new InvalidEnumArgumentException(nameof(prefer))
+                        };
+
+                        inpt = inpt.Where(it => it[i] == preference).ToArray();
+
+                        if (inpt.Length == 1)
+                            return inpt.First();
+                    }
+                }
+            }
+
+            var oxygenStr = NarrowAndPrefer((string[])lines.Clone(), 1);
+            var co2Str = NarrowAndPrefer((string[])lines.Clone(), 0);
+
+            var oxygen = Convert.ToInt32(oxygenStr, 2);
+            var co2 = Convert.ToInt32(co2Str, 2);
+            
+            return (oxygen, co2);
         }
     }
     
