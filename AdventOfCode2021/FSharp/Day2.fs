@@ -23,6 +23,7 @@ let part1 (input: string) : (int * int) =
         | "forward" -> { state with x = state.x + magnitude }
         | "up" -> { state with y = state.y - magnitude }
         | "down" -> { state with y = state.y + magnitude }
+        | _ -> failwith "invalid instruction"
 
     instructions
     |> Array.fold folder State.empty
@@ -45,6 +46,7 @@ let part2 (input: string) : (int * int) =
         | "down" ->
             { state with
                   aim = state.aim + magnitude }
+        | _ -> failwith "invalid instruction"
 
     instructions
     |> Array.fold folder State.empty
