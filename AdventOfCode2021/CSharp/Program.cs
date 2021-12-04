@@ -28,3 +28,6 @@ Console.WriteLine($"Day 3 Part 2 answer: {day3Part2Answer}: multiplied: {day3Par
 var day4Input = File.ReadAllText("Day4Input.txt");
 var day4Part1Answer = new Day4().Part1(day4Input);
 Console.WriteLine($"Day 4 Part 1 answer: {day4Part1Answer}: multiplied: {day4Part1Answer.undaubedSum * day4Part1Answer.lastDrawn}");
+
+var day4Part2Answer = new Day4().Part2(day4Input);
+Console.WriteLine($"Day 4 Part 2 answer: {day4Part2Answer}: multiplied: {day4Part2Answer.undaubedSum * day4Part2Answer.lastDrawn}");

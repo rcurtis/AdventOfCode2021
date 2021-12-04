@@ -35,7 +35,7 @@ namespace AdventOfCode2021
             }
         }
 
-        public (int undaubedSum, int lastDrawn) Part1(string input)
+        private (IEnumerable<int> balldraw, List<Card> cards) ParseInput(string input)
         {
             var lines = input.Split("\r\n\r\n");
             var ballDraw = lines.First().Split(",").Select(int.Parse);
@@ -43,7 +43,22 @@ namespace AdventOfCode2021
                 .Select(ParseCard)
                 .Select(it => new Card { Spots = it })
                 .ToList();
+            return (ballDraw, cards);
+        }
 
+        private List<Spot> ParseCard(string it)
+        {
+            return it.Replace("\r\n", " ")
+                .Replace("  ", " ")
+                .Trim()
+                .Split(" ")
+                .Select(value => new Spot { Value = int.Parse(value) })
+                .ToList();
+        }
+
+        public (int undaubedSum, int lastDrawn) Part1(string input)
+        {
+            var (ballDraw, cards) = ParseInput(input);
             foreach (var ball in ballDraw)
             {
                 for (var i = 0; i < cards.Count; i++)
@@ -62,19 +77,34 @@ namespace AdventOfCode2021
             throw new Exception("Bingo not found");
         }
 
-        private List<Spot> ParseCard(string it)
+        public (int undaubedSum, int lastDrawn) Part2(string input)
         {
-            return it.Replace("\r\n", " ")
-                .Replace("  ", " ")
-                .Trim()
-                .Split(" ")
-                .Select(value => new Spot { Value = int.Parse(value) })
-                .ToList();
-        }
+            var (ballDraw, cards) = ParseInput(input);
+            foreach (var ball in ballDraw)
+            {
+                var cardsToRemove = new List<Card>(cards.Count);
+                for (var i = 0; i < cards.Count; i++)
+                {
+                    var card = cards[i];
+                    var spot = card.Spots.FirstOrDefault(it => it.Value == ball);
+                    if (spot == null) 
+                        continue;
+                    
+                    spot.Daubed = true;
+                    if (card.HasBingo())
+                    {
+                        if (cards.Count == 1)
+                            return (card.GetUndaubedSum(), ball);
+                        else
+                            cardsToRemove.Add(card);
+                    }
+                }
 
-        public (int sum, int number) Part2(string input)
-        {
-            return (0, 0);
+                cards.RemoveAll(it => cardsToRemove.Contains(it));
+                cardsToRemove.Clear();
+            }
+
+            throw new Exception("Bingo not found");
         }
     }
     
@@ -104,7 +134,7 @@ namespace AdventOfCode2021
         [TestMethod]
         public void TestPart1()
         {
-            (int undaubedSum, int lastDrawn) expected = (188, 24);
+            var expected = (188, 24);
             var actual = new Day4().Part1(_smallInput);
             Assert.AreEqual(expected, actual);
         }
@@ -112,7 +142,7 @@ namespace AdventOfCode2021
         [TestMethod]
         public void TestPart2()
         {
-            var expected = (23, 10);
+            var expected = (148, 13);
             var actual = new Day4().Part2(_smallInput);
             Assert.AreEqual(expected, actual);
         }
