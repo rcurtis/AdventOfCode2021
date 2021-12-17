@@ -4,10 +4,8 @@ open FSharp.Core
 open Microsoft.VisualStudio.TestTools.UnitTesting
 
 type State =
-    { x: int
-      y: int
-      aim: int }
-    static member empty = { x = 0; y = 0; aim = 0 }
+    { X: int; Y: int; Aim: int }
+    static member empty = { X = 0; Y = 0; Aim = 0 }
 
 let parseInstructions (input: string) =
     input.Split("\r\n")
@@ -20,14 +18,14 @@ let part1 (input: string) : (int * int) =
         let magnitude = current.[1] |> int
 
         match current.[0] with
-        | "forward" -> { state with x = state.x + magnitude }
-        | "up" -> { state with y = state.y - magnitude }
-        | "down" -> { state with y = state.y + magnitude }
+        | "forward" -> { state with X = state.X + magnitude }
+        | "up" -> { state with Y = state.Y - magnitude }
+        | "down" -> { state with Y = state.Y + magnitude }
         | _ -> failwith "invalid instruction"
 
     instructions
     |> Array.fold folder State.empty
-    |> fun it -> (it.x, it.y)
+    |> fun it -> (it.X, it.Y)
 
 let part2 (input: string) : (int * int) =
     let instructions = input |> parseInstructions
@@ -38,19 +36,19 @@ let part2 (input: string) : (int * int) =
         match current.[0] with
         | "forward" ->
             { state with
-                  x = state.x + magnitude
-                  y = state.y + (state.aim * magnitude) }
+                  X = state.X + magnitude
+                  Y = state.Y + (state.Aim * magnitude) }
         | "up" ->
             { state with
-                  aim = state.aim - magnitude }
+                  Aim = state.Aim - magnitude }
         | "down" ->
             { state with
-                  aim = state.aim + magnitude }
+                  Aim = state.Aim + magnitude }
         | _ -> failwith "invalid instruction"
 
     instructions
     |> Array.fold folder State.empty
-    |> fun it -> (it.x, it.y)
+    |> fun it -> (it.X, it.Y)
 
 module Test =
     open Xunit

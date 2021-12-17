@@ -17,7 +17,6 @@ Console.WriteLine($"Day 2 Part 1 answer: {day2Part1Answer}: multiplied: {day2Par
 var day2Part2Answer = new Day2().Part2(day2Input);
 Console.WriteLine($"Day 2 Part 2 answer: {day2Part2Answer}: multiplied: {day2Part2Answer.x * day2Part2Answer.y}");
 
-
 var day3Input = File.ReadAllText("Day3Input.txt");
 var day3Part1Answer = new Day3().Part1(day3Input);
 Console.WriteLine($"Day 3 Part 1 answer: {day3Part1Answer}: multiplied: {day3Part1Answer.gamma * day3Part1Answer.epsilon}");
@@ -31,3 +30,10 @@ Console.WriteLine($"Day 4 Part 1 answer: {day4Part1Answer}: multiplied: {day4Par
 
 var day4Part2Answer = new Day4().Part2(day4Input);
 Console.WriteLine($"Day 4 Part 2 answer: {day4Part2Answer}: multiplied: {day4Part2Answer.undaubedSum * day4Part2Answer.lastDrawn}");
+
+var day6Input = File.ReadAllText("Day6Input.txt");
+var day6Part1Answer = new Day6().Part1(day6Input);
+Console.WriteLine($"Day 6 Part 6 answer: {day6Part1Answer}");
+
+/*var day6Part2Answer = new Day6().Part2(day6Input);
+Console.WriteLine($"Day 6 Part 6 answer: {day6Part2Answer}");*/
